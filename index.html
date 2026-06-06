@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Admin Services Portal</title>
+
+<link rel="stylesheet" href="style.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+<body>
+
+<header>
+
+    <div class="logo">
+        Admin Services Portal
+    </div>
+
+</header>
+
+<section class="hero">
+
+    <h1>Welcome to Admin Services</h1>
+
+    <p>
+        Access reservation forms, calendars, inventory monitoring,
+        and the Admin Assistant.
+    </p>
+
+</section>
+
+<section class="cards">
+
+    <a href="YOUR_GOOGLE_FORM_URL" target="_blank" class="card">
+        <h3>📋 Reservation Request</h3>
+        <p>Create a new reservation request.</p>
+    </a>
+
+    <a href="YOUR_CALENDAR_URL" target="_blank" class="card">
+        <h3>📅 Reservation Calendar</h3>
+        <p>View approved reservations.</p>
+    </a>
+
+    <a href="YOUR_INVENTORY_URL" target="_blank" class="card">
+        <h3>📦 Inventory</h3>
+        <p>Check available stocks.</p>
+    </a>
+
+    <div class="card chatbot-card">
+
+        <h3>🤖 Admin Assistant</h3>
+
+        <div id="chatbox"></div>
+
+        <div class="chat-input">
+
+            <input
+                type="text"
+                id="question"
+                placeholder="Ask something..."
+            >
+
+            <button onclick="askBot()">
+                Send
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+<script src="script.js"></script>
+
+</body>
+</html>
