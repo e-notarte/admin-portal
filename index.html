@@ -108,56 +108,122 @@ button{
 
 /* ================= CHATBOT ================= */
 
+/* FLOATING BUTTON (FIXED + PILL STYLE) */
+/* MAIN WRAPPER */
 .chatbot-toggle{
   position:fixed;
-  bottom:20px;
-  right:20px;
-  width:60px;
-  height:60px;
-  background:#FCAE16;
-  color:#1E355F;
-  border-radius:50%;
+  bottom:90px;
+  right:70px;
+
+  width:90px;
+  height:110px;
+
   display:flex;
+  flex-direction:column;
   align-items:center;
-  justify-content:center;
-  font-size:22px;
+
   cursor:pointer;
-  box-shadow:0 5px 15px rgba(0,0,0,0.2);
-  z-index:999;
+  z-index:1000;
 }
 
+/* CLOUD BUTTON (TRUE CIRCLE) */
+.chat-circle{
+  width:60px;
+  height:60px;
+
+  background:#FCAE16;
+  border-radius:50%;
+
+  position:absolute;
+  bottom:20px;
+}
+
+/* IMAGE FLOATING ABOVE (NO CLIP EVER) */
+.bot-float-image{
+  width:85px;
+  height:auto;   /* 👈 IMPORTANT: keeps full image */
+
+  position:absolute;
+  top:-30px;
+
+  object-fit:contain; /* 👈 prevents cropping */
+
+  z-index:2;
+
+  pointer-events:none;
+}
+
+/* LABEL BELOW */
+.chat-label{
+  position:absolute;
+  bottom:-25px;
+
+  font-size:11px;
+  font-weight:600;
+  color:#1E355F;
+
+  white-space:nowrap;
+}
+}
+
+/* BOT IMAGE INSIDE BUTTON */
+.toggle-avatar{
+  width:80px;
+  height:80px;
+
+  object-fit:contain;
+
+  border:none;
+  border-radius:0;
+
+  flex-shrink:0;
+}
+
+/* CHAT BOX */
 .chatbot-box{
   position:fixed;
-  bottom:90px;
-  right:20px;
+  bottom:160px;  /* 👈 increased from 110px */
+  right:70px;
+
   width:320px;
   height:420px;
+
   background:white;
   border-radius:14px;
+
   box-shadow:0 5px 20px rgba(0,0,0,0.2);
+
   display:none;
   flex-direction:column;
   overflow:hidden;
-  z-index:999;
+
+  z-index:1000;
 }
 
 /* CHAT HEADER */
 .chatbot-header{
   background:#1E355F;
   color:white;
+
   display:flex;
   align-items:center;
-  gap:10px;
-  padding:10px;
+  gap:12px;
+
+  padding:12px 14px;
 }
 
-/* BOT IMAGE */
+/* BOT IMAGE IN HEADER */
 .bot-avatar{
-  width:35px;
-  height:35px;
-  border-radius:50%;
+  width:40px;
+  height:40px;
+
+  border-radius:40%;  /* 👈 makes it circular again */
+
   object-fit:cover;
+
   border:2px solid #FCAE16;
+
+  box-shadow:0 2px 6px rgba(0,0,0,0.15);
 }
 
 /* BOT NAME */
@@ -174,7 +240,7 @@ button{
   overflow-y:auto;
 }
 
-/* INPUT */
+/* INPUT AREA */
 .chatbot-input{
   display:flex;
   border-top:1px solid #eee;
@@ -322,7 +388,15 @@ Submit Request
 </div>
 
 <!-- CHAT BUTTON -->
-<div class="chatbot-toggle" onclick="toggleChat()">💬</div>
+<div class="chatbot-toggle" onclick="toggleChat()">
+
+  <img src="https://i.imgur.com/4ZyROUP.png" class="bot-float-image">
+
+  <div class="chat-circle"></div>
+
+  <div class="chat-label">Chat with Me!</div>
+
+</div>
 
 <!-- CHAT BOX -->
 <div class="chatbot-box" id="chatbot">
