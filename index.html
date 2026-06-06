@@ -413,21 +413,76 @@ function sendMessage(){
   const input = document.getElementById("chatInput");
   const messages = document.getElementById("messages");
 
-  if(input.value.trim()==="") return;
+  const text = input.value.trim();
+  if(text === "") return;
+ 	
+  // USER MESSAGE
+  messages.innerHTML += `<div><b>You:</b> ${text}</div>`;
 
-  messages.innerHTML +=
-  `<div><b>You:</b> ${input.value}</div>`;
+  const q = text.toLowerCase();
 
-  messages.innerHTML +=
-  `<div><b>Mae:</b> Thank you. Your concern has been noted.</div>`;
+  let reply = getMaeResponse(q);
 
-  input.value="";
+  // BOT RESPONSE (slight delay like Siri)
+  setTimeout(() => {
+    messages.innerHTML += `<div><b>Mae:</b> ${reply}</div>`;
+    messages.scrollTop = messages.scrollHeight;
+  }, 600);
 
-  messages.scrollTop =
-  messages.scrollHeight;
+  input.value = "";		
 
 }
 
+function getMaeResponse(q){
+
+  // GREETINGS
+  if(q.match(/hello|hi|hey/)){
+    return "Hello 👋 I’m Mae, your Admin Assistant. How can I help you today?";
+  }
+
+  // HELP
+  if(q.includes("help")){
+    return "I can assist you with Zoom, MS Teams, Conference, Function Hall, and Parking requests.";
+  }
+
+  // ZOOM
+  if(q.includes("zoom")){
+    return "Zoom requests are handled by the Admin Scheduling System. Do you want the schedule?";
+  }
+
+  // TEAMS
+  if(q.includes("teams")){
+    return "MS Teams meetings are processed and approved by HR & Admin.";
+  }
+
+  // CONFERENCE
+  if(q.includes("conference")){
+    return "Conference Room schedules are available in the Admin Calendar system.";
+  }
+
+  // FUNCTION
+  if(q.includes("function")){
+    return "Function Hall bookings require approval and preparation time.";
+  }
+
+  // PARKING
+  if(q.includes("parking")){
+    return "Parking requests must be submitted at least 24 hours before schedule.";
+  }
+
+  // STATUS
+  if(q.includes("status")){
+    return "You can check your request status in the Admin Dashboard.";
+  }
+
+  // THANK YOU
+  if(q.includes("thank")){
+    return "You're welcome 😊 I'm always here to help.";
+  }
+
+  // DEFAULT
+  return "I'm still learning 🤖 Try asking about Zoom, Teams, Conference, Parking, or Function Hall.";
+}
 function toggleRequestFields(){
 
     const requestType =
