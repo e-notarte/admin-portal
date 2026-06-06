@@ -418,8 +418,11 @@ async function sendMessage(){
 
   messages.innerHTML += `<div><b>You:</b> ${text}</div>`;
 
-  const res = await fetch("YOUR_APPS_SCRIPT_URL", {
+  const res = await fetch("https://script.google.com/macros/s/AKfycbxK9HhjGlyG6y1WI6zZ30zRDxRaGekypYn3Dfshhvv0gun6OLc3D8yWV4O9TL1rwqoyAw/exec", {
     method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
     body: JSON.stringify({ message: text })
   });
 
