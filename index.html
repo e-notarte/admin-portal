@@ -1,79 +1,572 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>R-II Builders, Inc.</title>
 
-<title>Admin Services Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="style.css">
+<style>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+*{
+  box-sizing:border-box;
+}
 
+body{
+  margin:0;
+  font-family:'Poppins',sans-serif;
+  background:#f7f9fc;
+  color:#2d3748;
+}
+
+/* HEADER */
+.header-bar{
+  background:#1E355F;
+  color:#FCAE16;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:sticky;
+  top:0;
+  height:58px;
+  padding:0 20px;
+  box-shadow:0 2px 10px rgba(0,0,0,0.10);
+}
+
+.header-left{
+  position:absolute;
+  left:20px;
+}
+
+.logo{
+  width:70px;
+}
+
+.header-title{
+  font-size:18px;
+  font-weight:700;
+  text-transform:uppercase;
+}
+
+/* FORM */
+.container{
+  max-width:600px;
+  margin:40px auto;
+  background:white;
+  padding:25px;
+  border-radius:16px;
+  box-shadow:0 2px 18px rgba(0,0,0,0.06);
+}
+
+form{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+input, select, textarea{
+  width:100%;
+  padding:10px 12px;
+  border:1px solid #e2e8f0;
+  border-radius:8px;
+  font-size:14px;
+  font-family:'Poppins',sans-serif;
+}
+
+label{
+  font-size:13px;
+  font-weight:600;
+  color:#1E355F;
+}
+
+.notice{
+  font-size:12px;
+  background:#eef2f7;
+  padding:10px;
+  border-radius:8px;
+}
+
+/* BUTTON */
+button{
+  padding:12px;
+  background:#1E355F;
+  color:white;
+  border:none;
+  border-radius:8px;
+  font-weight:600;
+  cursor:pointer;
+}
+
+/* FOOTER */
+.footer-bar{
+  background:#1E355F;
+  color:#fff;
+  padding:15px 20px;
+  display:flex;
+  justify-content:space-between;
+  margin-top:40px;
+}
+
+/* ================= CHATBOT ================= */
+
+.chatbot-toggle{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  width:60px;
+  height:60px;
+  background:#FCAE16;
+  color:#1E355F;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:22px;
+  cursor:pointer;
+  box-shadow:0 5px 15px rgba(0,0,0,0.2);
+  z-index:999;
+}
+
+.chatbot-box{
+  position:fixed;
+  bottom:90px;
+  right:20px;
+  width:320px;
+  height:420px;
+  background:white;
+  border-radius:14px;
+  box-shadow:0 5px 20px rgba(0,0,0,0.2);
+  display:none;
+  flex-direction:column;
+  overflow:hidden;
+  z-index:999;
+}
+
+/* CHAT HEADER */
+.chatbot-header{
+  background:#1E355F;
+  color:white;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:10px;
+}
+
+/* BOT IMAGE */
+.bot-avatar{
+  width:35px;
+  height:35px;
+  border-radius:50%;
+  object-fit:cover;
+  border:2px solid #FCAE16;
+}
+
+/* BOT NAME */
+.bot-name{
+  font-weight:600;
+  font-size:14px;
+}
+
+/* MESSAGES */
+.chatbot-messages{
+  flex:1;
+  padding:10px;
+  font-size:13px;
+  overflow-y:auto;
+}
+
+/* INPUT */
+.chatbot-input{
+  display:flex;
+  border-top:1px solid #eee;
+}
+
+.chatbot-input input{
+  flex:1;
+  border:none;
+  padding:10px;
+  outline:none;
+}
+
+.chatbot-input button{
+  border:none;
+  background:#FCAE16;
+  color:#1E355F;
+  padding:10px 14px;
+  cursor:pointer;
+  font-weight:600;
+}
+
+</style>
 </head>
+
 <body>
 
-<header>
+<!-- HEADER -->
+<div class="header-bar">
+  <div class="header-left">
+    <img class="logo" src="https://riibuilders.b-cdn.net/wp-content/uploads/2025/09/cropped-RII-Logo-site-icon-192x192.png">
+  </div>
+  <div class="header-title">R-II Builders, Inc.</div>
+</div>
 
-    <div class="logo">
-        Admin Services Portal
-    </div>
+<!-- FORM -->
+<div class="container">
 
-</header>
+<form id="requestForm">
 
-<section class="hero">
+<h2 style="text-align:center;color:#FCAE16;">
+  ADMIN REQUEST FORM
+</h2>
 
-    <h1>Welcome to Admin Services</h1>
+<div class="notice">
+The name, email, and photo associated with your Google account will be recorded when you submit this form.
+</div>
 
-    <p>
-        Access reservation forms, calendars, inventory monitoring,
-        and the Admin Assistant.
-    </p>
+<label>Type of Request</label>
 
-</section>
+<select id="requestType" onchange="toggleRequestFields()" required>
+  <option value="">Select Request Type</option>
+  <option value="Zoom">Zoom</option>
+  <option value="MS Teams">MS Teams</option>
+  <option value="Conference">Conference</option>
+  <option value="Function Hall">Function Hall</option>
+  <option value="Parking">Parking</option>
+</select>
 
-<section class="cards">
+<label>Company</label>
 
-    <a href="YOUR_GOOGLE_FORM_URL" target="_blank" class="card">
-        <h3>📋 Reservation Request</h3>
-        <p>Create a new reservation request.</p>
-    </a>
+<select id="company" required>
+  <option value="">Select Company</option>
+  <option value="RMRCI">RMRCI</option>
+  <option value="RBI">RBI</option>
+  <option value="PESC">PESC</option>
+  <option value="RLAND">RLAND</option>
+</select>
 
-    <a href="YOUR_CALENDAR_URL" target="_blank" class="card">
-        <h3>📅 Reservation Calendar</h3>
-        <p>View approved reservations.</p>
-    </a>
+<div id="departmentContainer">
 
-    <a href="YOUR_INVENTORY_URL" target="_blank" class="card">
-        <h3>📦 Inventory</h3>
-        <p>Check available stocks.</p>
-    </a>
+<label>Department</label>
 
-    <div class="card chatbot-card">
+<input
+type="text"
+id="department"
+placeholder="Select Request Type First"
+readonly>
 
-        <h3>🤖 Admin Assistant</h3>
+</div>
 
-        <div id="chatbox"></div>
+<!-- ===================== -->
+<!-- MEETING REQUESTS -->
+<!-- ===================== -->
 
-        <div class="chat-input">
+<div id="meetingFields">
 
-            <input
-                type="text"
-                id="question"
-                placeholder="Ask something..."
-            >
+<label>Title / Event Name</label>
+<input type="text">
 
-            <button onclick="askBot()">
-                Send
-            </button>
+<label>Number of Participants</label>
+<input type="number">
 
-        </div>
+<label>Date</label>
+<input type="date">
 
-    </div>
+<label>Start Time</label>
+<input type="time">
 
-</section>
+<label>End Time</label>
+<input type="time">
 
-<script src="script.js"></script>
+<label>Purpose</label>
+<textarea rows="4"></textarea>
+
+</div>
+
+<!-- ===================== -->
+<!-- PARKING REQUEST -->
+<!-- ===================== -->
+
+<div id="parkingFields" style="display:none;">
+
+<label>Name of Visitor</label>
+<input type="text">
+
+<label>Car Plate Number</label>
+<input type="text">
+
+<label>Date</label>
+<input type="date">
+
+<label>Time</label>
+<input type="time">
+
+<label>Person to Visit</label>
+<input type="text">
+
+<label>Host Department</label>
+<input type="text">
+
+</div>
+
+<button type="submit">
+Submit Request
+</button>
+
+</form>
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer-bar">
+  <div>© 2026 RII Builders, Inc.</div>
+  <div>developed by en.dev</div>
+</div>
+
+<!-- CHAT BUTTON -->
+<div class="chatbot-toggle" onclick="toggleChat()">💬</div>
+
+<!-- CHAT BOX -->
+<div class="chatbot-box" id="chatbot">
+
+  <!-- HEADER WITH BOT PROFILE -->
+  <div class="chatbot-header">
+
+    <!-- 🔥 BOT IMAGE (CHANGE THIS LINK) -->
+    <img class="bot-avatar"
+         src="https://i.imgur.com/4ZyROUP.png"
+         alt="Mae">
+
+    <!-- BOT NAME -->
+    <div class="bot-name">Mae</div>
+
+  </div>
+
+  <div class="chatbot-messages" id="messages">
+    <div><b>Mae:</b> Hi! How can I help you today?</div>
+  </div>
+
+  <div class="chatbot-input">
+    <input id="chatInput" placeholder="Type message...">
+    <button onclick="sendMessage()">Send</button>
+  </div>
+
+</div>
+
+<!-- SUCCESS MODAL -->
+<div id="successModal"
+style="
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,.5);
+justify-content:center;
+align-items:center;
+z-index:10000;
+">
+
+<div style="
+background:white;
+padding:30px;
+border-radius:15px;
+text-align:center;
+width:350px;
+">
+
+<h2 style="color:#1E355F;">
+Request Submitted
+</h2>
+
+<p>
+Your request has been successfully submitted.
+</p>
+
+<p>
+Reference No:
+<br>
+<b id="refNo"></b>
+</p>
+
+<button onclick="closeModal()">
+Close
+</button>
+
+</div>
+</div>
+
+<script>
+
+function toggleChat(){
+
+  const box = document.getElementById("chatbot");
+
+  box.style.display =
+  box.style.display === "flex"
+  ? "none"
+  : "flex";
+
+}
+
+function sendMessage(){
+
+  const input = document.getElementById("chatInput");
+  const messages = document.getElementById("messages");
+
+  if(input.value.trim()==="") return;
+
+  messages.innerHTML +=
+  `<div><b>You:</b> ${input.value}</div>`;
+
+  messages.innerHTML +=
+  `<div><b>Mae:</b> Thank you. Your concern has been noted.</div>`;
+
+  input.value="";
+
+  messages.scrollTop =
+  messages.scrollHeight;
+
+}
+
+function toggleRequestFields(){
+
+    const requestType =
+    document.getElementById("requestType").value;
+
+    const meetingFields =
+    document.getElementById("meetingFields");
+
+    const parkingFields =
+    document.getElementById("parkingFields");
+
+    const departmentContainer =
+    document.getElementById("departmentContainer");
+
+    const company =
+    document.getElementById("company");
+
+    if(
+       requestType === "Zoom" ||
+       requestType === "MS Teams"
+    ){
+
+        company.value = "RBI";
+        company.disabled = true;
+
+        departmentContainer.innerHTML = `
+
+        <label>Department</label>
+
+        <select id="department" required>
+
+            <option value="">Select Department</option>
+            <option>ADMIN</option>
+            <option>HR</option>
+            <option>ESSH</option>
+            <option>ENGINEERING</option>
+            <option>COST & CONTRACTS</option>
+            <option>PURCHASING</option>
+            <option>BDG</option>
+            <option>OPERATIONS</option>
+            <option>CRMD</option>
+
+        </select>
+
+        `;
+
+        meetingFields.style.display = "block";
+        parkingFields.style.display = "none";
+
+    }
+
+    else if(requestType === "Parking"){
+
+        company.disabled = false;
+        company.value = "";
+
+        departmentContainer.innerHTML = `
+
+        <label>Department</label>
+
+        <input
+        type="text"
+        id="department"
+        placeholder="Enter Department"
+        required>
+
+        `;
+
+        meetingFields.style.display = "none";
+        parkingFields.style.display = "block";
+
+    }
+
+    else{
+
+        company.disabled = false;
+        company.value = "";
+
+        departmentContainer.innerHTML = `
+
+        <label>Department</label>
+
+        <input
+        type="text"
+        id="department"
+        placeholder="Enter Department"
+        required>
+
+        `;
+
+        meetingFields.style.display = "block";
+        parkingFields.style.display = "none";
+
+    }
+
+}
+
+function generateReference(){
+
+  const year = new Date().getFullYear();
+
+  const random =
+  Math.floor(Math.random()*90000)+10000;
+
+  return "ADM-" + year + "-" + random;
+
+}
+
+document
+.getElementById("requestForm")
+.addEventListener("submit",function(e){
+
+    e.preventDefault();
+
+    const ref = generateReference();
+
+    document.getElementById("refNo").innerText = ref;
+
+    document.getElementById("successModal")
+    .style.display="flex";
+
+    this.reset();
+
+    document.getElementById("meetingFields")
+    .style.display="block";
+
+    document.getElementById("parkingFields")
+    .style.display="none";
+
+});
+
+function closeModal(){
+
+  document.getElementById("successModal")
+  .style.display="none";
+
+}
+
+</script>
 
 </body>
 </html>
