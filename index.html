@@ -408,29 +408,27 @@ function toggleChat(){
 
 }
 
-function sendMessage(){
+async function sendMessage(){
 
   const input = document.getElementById("chatInput");
   const messages = document.getElementById("messages");
 
   const text = input.value.trim();
-  if(text === "") return;
- 	
-  // USER MESSAGE
+  if(!text) return;
+
   messages.innerHTML += `<div><b>You:</b> ${text}</div>`;
 
-  const q = text.toLowerCase();
+  const res = await fetch("YOUR_APPS_SCRIPT_URL", {
+    method: "POST",
+    body: JSON.stringify({ message: text })
+  });
 
-  let reply = getMaeResponse(q);
+  const data = await res.json();
 
-  // BOT RESPONSE (slight delay like Siri)
-  setTimeout(() => {
-    messages.innerHTML += `<div><b>Mae:</b> ${reply}</div>`;
-    messages.scrollTop = messages.scrollHeight;
-  }, 600);
+  messages.innerHTML += `<div><b>Mae:</b> ${data.reply}</div>`;
 
-  input.value = "";		
-
+  input.value = "";
+  messages.scrollTop = messages.scrollHeight;
 }
 
 function getMaeResponse(q){
