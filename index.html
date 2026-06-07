@@ -7,6 +7,8 @@
 
 <style>
 
+/* ================= BASE ================= */
+
 *{
   box-sizing:border-box;
 }
@@ -16,11 +18,11 @@ body{
   font-family:'Poppins',sans-serif;
   background:#f7f9fc;
   color:#2d3748;
-
-  padding-bottom:45px;
+  padding-bottom:60px;
 }
 
-/* HEADER */
+/* ================= HEADER (MATCH PAGE 2) ================= */
+
 .header-bar{
   background:#1E355F;
   color:#FCAE16;
@@ -43,82 +45,68 @@ body{
   width:70px;
 }
 
-.header-title{
-  font-size:18px;
-  font-weight:700;
-  text-transform:uppercase;
-}
+/* ================= DASHBOARD ================= */
 
-/* FORM */
 .container{
-  max-width:600px;
+  max-width:900px;
   margin:40px auto;
+  padding:10px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:16px;
+}
+
+/* CARD STYLE (MATCH FORM LOOK) */
+.card{
   background:white;
-  padding:25px;
-  border-radius:16px;
+  padding:18px;
+  border-radius:14px;
   box-shadow:0 2px 18px rgba(0,0,0,0.06);
+  text-decoration:none;
+  color:#2d3748;
+  transition:0.2s;
+  border-left:4px solid #FCAE16;
 }
 
-form{
-  display:flex;
-  flex-direction:column;
-  gap:12px;
+.card:hover{
+  transform:translateY(-3px);
+  box-shadow:0 6px 22px rgba(0,0,0,0.12);
 }
 
-input, select, textarea{
-  width:100%;
-  padding:10px 12px;
-  border:1px solid #e2e8f0;
-  border-radius:8px;
-  font-size:14px;
-  font-family:'Poppins',sans-serif;
-}
-
-label{
-  font-size:13px;
-  font-weight:600;
+/* TITLE */
+.card h3{
+  margin:0;
+  font-size:16px;
   color:#1E355F;
 }
 
-.notice{
+/* DESCRIPTION */
+.card p{
   font-size:12px;
-  background:#eef2f7;
-  padding:10px;
-  border-radius:8px;
+  color:#718096;
+  margin-top:6px;
 }
 
-/* BUTTON */
-button{
-  padding:12px;
-  background:#1E355F;
-  color:white;
-  border:none;
-  border-radius:8px;
-  font-weight:600;
-  cursor:pointer;
-}
+/* ================= FOOTER ================= */
 
-/* FOOTER */
 .footer-bar{
   position:fixed;
   bottom:0;
   left:0;
   width:100%;
-
   background:#1E355F;
   color:#fff;
-
   padding:8px 15px;
   font-size:12px;
-
   display:flex;
   justify-content:space-between;
   align-items:center;
-
-  z-index:999;
 }
 
-/* ================= CHATBOT ================= */
+/* ================= CHATBOT (SAME STYLE AS PAGE 2) ================= */
 
 /* FLOATING BUTTON (FIXED + PILL STYLE) */
 /* MAIN WRAPPER */
@@ -280,112 +268,48 @@ button{
   <div class="header-left">
     <img class="logo" src="https://riibuilders.b-cdn.net/wp-content/uploads/2025/09/cropped-RII-Logo-site-icon-192x192.png">
   </div>
-  <div class="header-title">R-II Builders, Inc.</div>
+  <div class="header-title">
+  R-II BUILDERS, INC.<br>
+  <span style="font-size:12px; font-weight:600; color:#fff;">
+    ADMIN DEPARTMENT
+  </span>
+</div>
 </div>
 
-<!-- FORM -->
+
+
+<!-- DASHBOARD -->
 <div class="container">
 
-<form id="requestForm">
+  <div class="grid">
 
-<h2 style="text-align:center;color:#FCAE16;">
-  ADMIN REQUEST FORM
-</h2>
+    <a href="admin-request.html" class="card">
+      <h3>Create Admin Request</h3>
+      <p>Submit facility and admin requests</p>
+    </a>
 
-<div class="notice">
-The name, email, and photo associated with your email account will be recorded when you submit this form.
-</div>
+    <a href="admin-request.html" class="card">
+      <h3>Reservation Calendar</h3>
+      <p>Check room & facility schedules</p>
+    </a>
 
-<label>Type of Request</label>
+    <a href="reservation-calendar.html" class="card">
+      <h3>Office Supplies</h3>
+      <p>Request office materials</p>
+    </a>
 
-<select id="requestType" onchange="toggleRequestFields()" required>
-  <option value="">Select Request Type</option>
-  <option value="Zoom">Zoom</option>
-  <option value="MS Teams">MS Teams</option>
-  <option value="Conference">Conference</option>
-  <option value="Function Hall">Function Hall</option>
-  <option value="Parking">Parking</option>
-</select>
+    <a href="office-supplies.html" class="card">
+      <h3>Maintenance Schedule</h3>
+      <p>View building maintenance plans</p>
+    </a>
 
-<label>Company</label>
+    <a href="maintenance-schedule.html" class="card">
+      <h3>Memos</h3>
+      <p>Announcements & internal notices</p>
+    </a>
 
-<select id="company" required>
-  <option value="">Select Company</option>
-  <option value="RMRCI">RMRCI</option>
-  <option value="RBI">RBI</option>
-  <option value="PESC">PESC</option>
-  <option value="RLAND">RLAND</option>
-</select>
 
-<div id="departmentContainer">
-
-<label>Department</label>
-
-<input
-type="text"
-id="department"
-placeholder="Select Request Type First"
-readonly>
-
-</div>
-
-<!-- ===================== -->
-<!-- MEETING REQUESTS -->
-<!-- ===================== -->
-
-<div id="meetingFields">
-
-<label>Title / Event Name</label>
-<input type="text">
-
-<label>Number of Participants</label>
-<input type="number">
-
-<label>Date</label>
-<input type="date">
-
-<label>Start Time</label>
-<input type="time">
-
-<label>End Time</label>
-<input type="time">
-
-<label>Purpose</label>
-<textarea rows="4"></textarea>
-
-</div>
-
-<!-- ===================== -->
-<!-- PARKING REQUEST -->
-<!-- ===================== -->
-
-<div id="parkingFields" style="display:none;">
-
-<label>Name of Visitor</label>
-<input type="text">
-
-<label>Car Plate Number</label>
-<input type="text">
-
-<label>Date</label>
-<input type="date">
-
-<label>Time</label>
-<input type="time">
-
-<label>Person to Visit</label>
-<input type="text">
-
-<label>Host Department</label>
-<input type="text">
-
-</div>
-
-<button type="submit">
-Submit Request
-</button>
-
-</form>
+  </div>
 
 </div>
 
@@ -395,35 +319,22 @@ Submit Request
   <div>developed by en.dev</div>
 </div>
 
-<!-- CHAT BUTTON -->
+<!-- CHATBOT -->
 <div class="chatbot-toggle" onclick="toggleChat()">
-
   <img src="https://i.imgur.com/4ZyROUP.png" class="bot-float-image">
-
   <div class="chat-circle"></div>
-
-  <div class="chat-label">Chat with Me!</div>
-
+  <div class="chat-label">Chat Support!</div>
 </div>
 
-<!-- CHAT BOX -->
 <div class="chatbot-box" id="chatbot">
 
-  <!-- HEADER WITH BOT PROFILE -->
   <div class="chatbot-header">
-
-    <!-- 🔥 BOT IMAGE (CHANGE THIS LINK) -->
-    <img class="bot-avatar"
-         src="https://i.imgur.com/4ZyROUP.png"
-         alt="Mae">
-
-    <!-- BOT NAME -->
+    <img class="bot-avatar" src="https://i.imgur.com/4ZyROUP.png">
     <div class="bot-name">Mae</div>
-
   </div>
 
   <div class="chatbot-messages" id="messages">
-    <div><b>Mae:</b> Hi! How can I help you today?</div>
+    <div><b>Mae:</b> Hello! How can I help you today?</div>
   </div>
 
   <div class="chatbot-input">
@@ -433,65 +344,14 @@ Submit Request
 
 </div>
 
-<!-- SUCCESS MODAL -->
-<div id="successModal"
-style="
-display:none;
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,.5);
-justify-content:center;
-align-items:center;
-z-index:10000;
-">
-
-<div style="
-background:white;
-padding:30px;
-border-radius:15px;
-text-align:center;
-width:350px;
-">
-
-<h2 style="color:#1E355F;">
-Request Submitted
-</h2>
-
-<p>
-Your request has been successfully submitted.
-</p>
-
-<p>
-Reference No:
-<br>
-<b id="refNo"></b>
-</p>
-
-<button onclick="closeModal()">
-Close
-</button>
-
-</div>
-</div>
-
 <script>
 
 function toggleChat(){
-
   const box = document.getElementById("chatbot");
-
-  box.style.display =
-  box.style.display === "flex"
-  ? "none"
-  : "flex";
-
+  box.style.display = box.style.display === "flex" ? "none" : "flex";
 }
 
-async function sendMessage(){
-
+function sendMessage(){
   const input = document.getElementById("chatInput");
   const messages = document.getElementById("messages");
 
@@ -499,222 +359,11 @@ async function sendMessage(){
   if(!text) return;
 
   messages.innerHTML += `<div><b>You:</b> ${text}</div>`;
-
-  try {
-
-    const res = await fetch("YOUR_WEBAPP_URL", {
-      method: "POST",
-      body: JSON.stringify({ message: text }),
-      headers: {
-        "Content-Type": "text/plain"
-      }
-    });
-
-    const data = await res.json();
-
-    messages.innerHTML += `<div><b>Mae:</b> ${data.reply}</div>`;
-
-  } catch(error) {
-
-    messages.innerHTML += `
-      <div><b>Mae:</b> Sorry, chatbot service is unavailable.</div>
-    `;
-
-    console.error(error);
-  }
+  messages.innerHTML += `<div><b>Mae:</b> I received: ${text}</div>`;
 
   input.value = "";
   messages.scrollTop = messages.scrollHeight;
 }
-
-function getMaeResponse(q){
-
-  // GREETINGS
-  if(q.match(/hello|hi|hey/)){
-    return "Hello 👋 I’m Mae, your Admin Assistant. How can I help you today?";
-  }
-
-  // HELP
-  if(q.includes("help")){
-    return "I can assist you with Zoom, MS Teams, Conference, Function Hall, and Parking requests.";
-  }
-
-  // ZOOM
-  if(q.includes("zoom")){
-    return "Zoom requests are handled by the Admin Scheduling System. Do you want the schedule?";
-  }
-
-  // TEAMS
-  if(q.includes("teams")){
-    return "MS Teams meetings are processed and approved by HR & Admin.";
-  }
-
-  // CONFERENCE
-  if(q.includes("conference")){
-    return "Conference Room schedules are available in the Admin Calendar system.";
-  }
-
-  // FUNCTION
-  if(q.includes("function")){
-    return "Function Hall bookings require approval and preparation time.";
-  }
-
-  // PARKING
-  if(q.includes("parking")){
-    return "Parking requests must be submitted at least 24 hours before schedule.";
-  }
-
-  // STATUS
-  if(q.includes("status")){
-    return "You can check your request status in the Admin Dashboard.";
-  }
-
-  // THANK YOU
-  if(q.includes("thank")){
-    return "You're welcome 😊 I'm always here to help.";
-  }
-
-  // DEFAULT
-  return "I'm still learning 🤖 Try asking about Zoom, Teams, Conference, Parking, or Function Hall.";
-}
-function toggleRequestFields(){
-
-    const requestType =
-    document.getElementById("requestType").value;
-
-    const meetingFields =
-    document.getElementById("meetingFields");
-
-    const parkingFields =
-    document.getElementById("parkingFields");
-
-    const departmentContainer =
-    document.getElementById("departmentContainer");
-
-    const company =
-    document.getElementById("company");
-
-    if(
-       requestType === "Zoom" ||
-       requestType === "MS Teams"
-    ){
-
-        company.value = "RBI";
-        company.disabled = true;
-
-        departmentContainer.innerHTML = `
-
-        <label>Department</label>
-
-        <select id="department" required>
-
-            <option value="">Select Department</option>
-            <option>ADMIN</option>
-            <option>HR</option>
-            <option>ESSH</option>
-            <option>ENGINEERING</option>
-            <option>COST & CONTRACTS</option>
-            <option>PURCHASING</option>
-            <option>BDG</option>
-            <option>OPERATIONS</option>
-            <option>CRMD</option>
-
-        </select>
-
-        `;
-
-        meetingFields.style.display = "block";
-        parkingFields.style.display = "none";
-
-    }
-
-    else if(requestType === "Parking"){
-
-        company.disabled = false;
-        company.value = "";
-
-        departmentContainer.innerHTML = `
-
-        <label>Department</label>
-
-        <input
-        type="text"
-        id="department"
-        placeholder="Enter Department"
-        required>
-
-        `;
-
-        meetingFields.style.display = "none";
-        parkingFields.style.display = "block";
-
-    }
-
-    else{
-
-        company.disabled = false;
-        company.value = "";
-
-        departmentContainer.innerHTML = `
-
-        <label>Department</label>
-
-        <input
-        type="text"
-        id="department"
-        placeholder="Enter Department"
-        required>
-
-        `;
-
-        meetingFields.style.display = "block";
-        parkingFields.style.display = "none";
-
-    }
-
-}
-
-function generateReference(){
-
-  const year = new Date().getFullYear();
-
-  const random =
-  Math.floor(Math.random()*90000)+10000;
-
-  return "ADM-" + year + "-" + random;
-
-}
-
-document
-.getElementById("requestForm")
-.addEventListener("submit",function(e){
-
-    e.preventDefault();
-
-    const ref = generateReference();
-
-    document.getElementById("refNo").innerText = ref;
-
-    document.getElementById("successModal")
-    .style.display="flex";
-
-    this.reset();
-
-    document.getElementById("meetingFields")
-    .style.display="block";
-
-    document.getElementById("parkingFields")
-    .style.display="none";
-
-});
-
-function closeModal(){
-
-  document.getElementById("successModal")
-  .style.display="none";
-
-}
-
 
 </script>
 
