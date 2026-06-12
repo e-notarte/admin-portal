@@ -560,35 +560,24 @@ async function sendMessage() {
 
 function toggleRequestFields(){
 
-    const requestType =
-    document.getElementById("requestType").value;
+    const requestType = document.getElementById("requestType").value;
 
-    const meetingFields =
-    document.getElementById("meetingFields");
+    const meetingFields = document.getElementById("meetingFields");
+    const parkingFields = document.getElementById("parkingFields");
+    const departmentContainer = document.getElementById("departmentContainer");
+    const company = document.getElementById("company");
 
-    const parkingFields =
-    document.getElementById("parkingFields");
+    if(requestType === "Zoom" || requestType === "MS Teams"){
 
-    const departmentContainer =
-    document.getElementById("departmentContainer");
-
-    const company =
-    document.getElementById("company");
-
-    if(
-       requestType === "Zoom" ||
-       requestType === "MS Teams"
-    ){
+        // SHOW DEPARTMENT (dropdown)
+        departmentContainer.style.display = "block";
 
         company.value = "RBI";
         company.disabled = true;
 
         departmentContainer.innerHTML = `
-
         <label>Department</label>
-
         <select id="department" required>
-
             <option value="">Select Department</option>
             <option>ADMIN</option>
             <option>HR</option>
@@ -599,9 +588,7 @@ function toggleRequestFields(){
             <option>BDG</option>
             <option>OPERATIONS</option>
             <option>CRMD</option>
-
         </select>
-
         `;
 
         meetingFields.style.display = "block";
@@ -614,17 +601,8 @@ function toggleRequestFields(){
         company.disabled = false;
         company.value = "";
 
-        departmentContainer.innerHTML = `
-
-        <label>Department</label>
-
-        <input
-        type="text"
-        id="department"
-        placeholder="Enter Department"
-        required>
-
-        `;
+        // ❌ HIDE DEPARTMENT COMPLETELY
+        departmentContainer.style.display = "none";
 
         meetingFields.style.display = "none";
         parkingFields.style.display = "block";
@@ -636,25 +614,22 @@ function toggleRequestFields(){
         company.disabled = false;
         company.value = "";
 
+        departmentContainer.style.display = "block";
+
         departmentContainer.innerHTML = `
-
         <label>Department</label>
-
         <input
-        type="text"
-        id="department"
-        placeholder="Enter Department"
-        required>
-
+            type="text"
+            id="department"
+            placeholder="Enter Department"
+            required>
         `;
 
         meetingFields.style.display = "block";
         parkingFields.style.display = "none";
 
     }
-
 }
-
 function generateReference(){
 
   const year = new Date().getFullYear();
