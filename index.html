@@ -352,18 +352,45 @@ function toggleChat(){
   box.style.display = box.style.display === "flex" ? "none" : "flex";
 }
 
-function sendMessage(){
+function sendMessage() {
+
   const input = document.getElementById("chatInput");
   const messages = document.getElementById("messages");
 
   const text = input.value.trim();
-  if(!text) return;
+
+  if (!text) return;
 
   messages.innerHTML += `<div><b>You:</b> ${text}</div>`;
-  messages.innerHTML += `<div><b>Mae:</b> I received: ${text}</div>`;
 
   input.value = "";
   messages.scrollTop = messages.scrollHeight;
+
+  fetch("https://script.google.com/macros/s/AKfycbzWYK61pNLKS8PCx_y0ak_0zv0u-b6AH2URoYlIZs_Zynt6lIy-y6ZSdTktMbyQ5cTj/exec", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      message: text
+    })
+  })
+  .then(response => response.json())
+  .then(data => {
+
+    messages.innerHTML += `<div><b>Mae:</b> ${data.reply}</div>`;
+    messages.scrollTop = messages.scrollHeight;
+
+  })
+  .catch(error => {
+
+    console.error(error);
+
+    messages.innerHTML += `<div><b>Mae:</b> Sorry, something went wrong.</div>`;
+    messages.scrollTop = messages.scrollHeight;
+
+  });
+
 }
 
 </script>
