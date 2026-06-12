@@ -382,21 +382,30 @@ async function sendMessage() {
   const text = input.value.trim();
   if (!text) return;
 
+  // show user message
   messages.innerHTML += `<div><b>You:</b> ${text}</div>`;
   input.value = "";
   messages.scrollTop = messages.scrollHeight;
 
   const data = await loadBotData();
 
-  let reply = "Sorry, I couldn't find an answer.";
+  let reply = "Sorry, I couldn't find an answer 😔.";
+  const message = text.toLowerCase();
 
+  // 🔥 SMART KEYWORD MATCHING (UPDATED)
   for (const item of data) {
-    if (text.toLowerCase().includes(item.question)) {
+
+    const keywords = item.question
+      .split(",")
+      .map(k => k.trim().toLowerCase());
+
+    if (keywords.some(k => message.includes(k))) {
       reply = item.answer;
       break;
     }
   }
 
+  // show bot response
   messages.innerHTML += `<div><b>Mae:</b> ${reply}</div>`;
   messages.scrollTop = messages.scrollHeight;
 }
