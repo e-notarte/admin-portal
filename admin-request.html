@@ -336,22 +336,32 @@ readonly>
 <div id="meetingFields">
 
 <label>Title / Event Name</label>
-<input type="text">
+<input
+  type="text"
+  id="description">
 
 <label>Number of Participants</label>
 <input type="number">
 
 <label>Date</label>
-<input type="date">
+<input
+  type="date"
+  id="requestDate">
 
 <label>Start Time</label>
-<input type="time">
+<input
+  type="time"
+  id="startTime">
 
 <label>End Time</label>
-<input type="time">
+<input
+  type="time"
+  id="endTime">
 
 <label>Purpose</label>
-<textarea rows="4"></textarea>
+<textarea
+  id="description"
+  rows="4"></textarea>
 
 </div>
 
@@ -684,30 +694,90 @@ function generateReference(){
   return "ADM-" + year + "-" + random;
 
 }
-
+  
 document
 .getElementById("requestForm")
-.addEventListener("submit",function(e){
+.addEventListener("submit",submitRequest);
 
-    e.preventDefault();
+  async function submitRequest(e){
 
-    const ref = generateReference();
+  e.preventDefault();
 
-    document.getElementById("refNo").innerText = ref;
+  const payload = {
 
-    document.getElementById("successModal")
-    .style.display="flex";
+    department:
+      document.getElementById("department").value,
 
-    this.reset();
+    type:
+      document.getElementById("requestType").value,
 
-    document.getElementById("meetingFields")
-    .style.display="block";
+    date:
+      document.getElementById("requestDate").value,
 
-    document.getElementById("parkingFields")
-    .style.display="none";
+    start:
+      document.getElementById("startTime").value,
 
-});
+    end:
+      document.getElementById("endTime").value,
 
+    description:
+      document.getElementById("description").value,
+
+    email: ""
+
+  };
+
+  try{
+
+    const res = await fetch(
+      "https://script.google.com/macros/s/AKfycbxcodBJsiyEIoOaLV4It1cldnmGXMVB0FRFJ3Ul804shXGd6pQqo0Vd4kQ5BoDDF1Np/exec",
+      {
+        method:"POST",
+
+        headers:{
+          "Content-Type":"text/plain"
+        },
+
+        body: JSON.stringify(payload)
+      }
+    );
+
+    const result = await res.json();
+
+    if(result.success){
+
+      document.getElementById("refNo").innerText =
+        result.reference;
+
+      document.getElementById("successModal")
+        .style.display = "flex";
+
+      document.getElementById("requestForm").reset();
+
+      document.getElementById("meetingFields")
+        .style.display = "block";
+
+      document.getElementById("parkingFields")
+        .style.display = "none";
+    }
+    else{
+
+      alert("Submission failed.");
+
+      console.log(result);
+
+    }
+
+  }
+  catch(err){
+
+    console.log(err);
+
+    alert("Unable to connect to server.");
+
+  }
+
+}
 function closeModal(){
 
   document.getElementById("successModal")
