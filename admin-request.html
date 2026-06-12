@@ -502,7 +502,7 @@ async function sendMessage(){
 
   try {
 
-    const res = await fetch("YOUR_WEBAPP_URL", {
+    const res = await fetch("https://script.google.com/macros/s/AKfycbzWYK61pNLKS8PCx_y0ak_0zv0u-b6AH2URoYlIZs_Zynt6lIy-y6ZSdTktMbyQ5cTj/exec", {
       method: "POST",
       body: JSON.stringify({ message: text }),
       headers: {
