@@ -500,93 +500,64 @@ function toggleChat(){
 
 }
 
-async function sendMessage(){
+let botCache = null;
+
+async function loadBotData() {
+
+  if (botCache) return botCache;
+
+  const url =
+    "https://docs.google.com/spreadsheets/d/1sEuM56pXVXVpT-0I016XUi2d-_rju1xPcNQm8x9Cbf8/gviz/tq?tqx=out:json&sheet=Bot";
+
+  const res = await fetch(url);
+  const text = await res.text();
+
+  const json = JSON.parse(text.substring(47, text.length - 2));
+
+  botCache = json.table.rows.map(row => ({
+    question: (row.c[0]?.v || "").toLowerCase(),
+    answer: row.c[1]?.v || ""
+  }));
+
+  return botCache;
+}
+
+async function sendMessage() {
 
   const input = document.getElementById("chatInput");
   const messages = document.getElementById("messages");
 
   const text = input.value.trim();
-  if(!text) return;
+  if (!text) return;
 
+  // show user message
   messages.innerHTML += `<div><b>You:</b> ${text}</div>`;
+  input.value = "";
+  messages.scrollTop = messages.scrollHeight;
 
-  try {
+  const data = await loadBotData();
 
-    const res = await fetch("https://script.google.com/macros/s/AKfycbwd4oWWLL5p_leJX5THd4RNaDX1NWTvYt9YuSHZV_Eq8pzgRGBmatISRvC4rvpT0sT5/exec", {
-      method: "POST",
-      body: JSON.stringify({ message: text }),
-      headers: {
-        "Content-Type": "text/plain"
-      }
-    });
+  let reply = "Sorry, I couldn't find an answer 😔.";
+  const message = text.toLowerCase();
 
-    const data = await res.json();
+  // keyword matching (same logic as index.html)
+  for (const item of data) {
 
-    messages.innerHTML += `<div><b>Mae:</b> ${data.reply}</div>`;
+    const keywords = item.question
+      .split(",")
+      .map(k => k.trim().toLowerCase());
 
-  } catch(error) {
-
-    messages.innerHTML += `
-      <div><b>Mae:</b> Sorry, chatbot service is unavailable.</div>
-    `;
-
-    console.error(error);
+    if (keywords.some(k => message.includes(k))) {
+      reply = item.answer;
+      break;
+    }
   }
 
-  input.value = "";
+  // show bot response
+  messages.innerHTML += `<div><b>Mae:</b> ${reply}</div>`;
   messages.scrollTop = messages.scrollHeight;
 }
 
-function getMaeResponse(q){
-
-  // GREETINGS
-  if(q.match(/hello|hi|hey/)){
-    return "Hello 👋 I’m Mae, your Admin Assistant. How can I help you today?";
-  }
-
-  // HELP
-  if(q.includes("help")){
-    return "I can assist you with Zoom, MS Teams, Conference, Function Hall, and Parking requests.";
-  }
-
-  // ZOOM
-  if(q.includes("zoom")){
-    return "Zoom requests are handled by the Admin Scheduling System. Do you want the schedule?";
-  }
-
-  // TEAMS
-  if(q.includes("teams")){
-    return "MS Teams meetings are processed and approved by HR & Admin.";
-  }
-
-  // CONFERENCE
-  if(q.includes("conference")){
-    return "Conference Room schedules are available in the Admin Calendar system.";
-  }
-
-  // FUNCTION
-  if(q.includes("function")){
-    return "Function Hall bookings require approval and preparation time.";
-  }
-
-  // PARKING
-  if(q.includes("parking")){
-    return "Parking requests must be submitted at least 24 hours before schedule.";
-  }
-
-  // STATUS
-  if(q.includes("status")){
-    return "You can check your request status in the Admin Dashboard.";
-  }
-
-  // THANK YOU
-  if(q.includes("thank")){
-    return "You're welcome 😊 I'm always here to help.";
-  }
-
-  // DEFAULT
-  return "I'm still learning 🤖 Try asking about Zoom, Teams, Conference, Parking, or Function Hall.";
-}
 function toggleRequestFields(){
 
     const requestType =
